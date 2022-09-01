@@ -1,11 +1,26 @@
 import numpy as np
 import tensorflow as tf
 import os
+from AlgorithmImports import *
+from collections import deque
+import config
+from datetime import *
+import statistics as stats 
+import time
 
+import donchian
+import volatility
+import tdi
+import volume_ma
+import heikinashi
+import ultrafastparrot
+from main import LogicalSkyBlueDog
 #%%
 ## These are parameters we should control to get max profit
+
 smma_slow_length = tf.Variable(300, name = "smma_slow_length")
-smma_fast_length = tf.Variable(100, name = "smma_fast_length")
+#tf_para_array[0] = smma_slow_length
+smma_fast_length = tf.Variable(100, name = "smma_fast_length") 
 smma_fastest_length = tf.Variable(50, name = "smma_fastest_length")
 
 donchain_period = tf.Variable(20, name = "donchain_period")
@@ -31,7 +46,16 @@ trend_sigma = tf.Variable(4, name = "trend_sigma")
 signal_offset = tf.Variable(0.85, name = "signal_offset")
 signal_sigma = tf.Variable(0.85, name = "signal_sigma")
 
-#%%
+
 ##Now, we should represent the function using tensorflow
+'''
+@tf.function 
+def f(smma_slow_length, smma_fast_length, smma_fastest_length, 
+      donchain_period, volatility_period, tdi_rsi, band_length, fast_ma_on_rsi, slow_ma_on_rsi,
+      volume_ma_length, tema_period, ema_period, candle_size_factor, short_alma_length,
+      long_alma_length, fast_sigma, fast_offset, trend_offset, trend_sigma, signal_offset, signal_sigma):
+    return LogicalSkyBlueDog.portfolio[LogicalSkyBlueDog.Crypto].value()
+    
+'''
 
-
+#%%
